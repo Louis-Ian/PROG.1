@@ -203,7 +203,7 @@ char *saida(char *entrada,int tamanho){
 
 	if(str_tamanho(centena)==0 || str_tamanho(unidade)==0) str_concatena(&centena,&unidade);
 	else str_concatenaE(&centena,&unidade);
-	printf("%s\n",unidade);
+	
 	str_copia(unidade,&saida);
 
 	char *cento="cento";
