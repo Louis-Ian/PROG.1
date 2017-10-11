@@ -9,42 +9,54 @@ int str_tamanho(char*s){
 	return i;
 }
 
-void str_copia(char *s,char *d){
-	for (int i = 0; i <= str_tamanho(s); i++)
-		d[i]=s[i];
+
+void str_copia(char *s,char **d){
+	*d=s;
 }
 
-char *str_concatena(char *s, char *d){
-	int a=str_tamanho(s); 
-	int b=str_tamanho(d);
+
+void str_concatena(char **s, char **d){
+
+	int a=str_tamanho(*s); 
+	int b=str_tamanho(*d);
+
 	char *v=(char*)malloc((a+b+1)*sizeof(char));
 	if(v==NULL){
 		printf("memoria insuficiente");
-		return (char*)1;
+		return (void)1;
 	}
 	for(int i=0;i<a;i++)
-		v[i]=s[i];
+		v[i]=(*s)[i];
 	for(int i=0;i<=b;i++)
-		v[(a+i)]=d[i];
-   	return v;
+		v[(a+i)]=(*d)[i];
+
+	*d=v;
 }
-char *str_concatenaE(char *s, char *d){
-	int a=str_tamanho(s);
-	int b=str_tamanho(d); 
+
+void str_concatenaE(char **s, char **d){
+
+	int a=str_tamanho(*s); 
+	int b=str_tamanho(*d);
+
 	char *v=(char*)malloc((a+b+4)*sizeof(char));
 	if(v==NULL){
 		printf("memoria insuficiente");
-		return (char*)1;
+		return (void)1;
 	}
+	
 	for(int i=0;i<a;i++)
-		v[i]=s[i];
+		v[i]=(*s)[i];
+
 	v[a]=' ';
 	v[a+1]='e';
 	v[a+2]=' ';
-	for(int i=0;i<=b;i++)
-		v[(a+i+3)]=d[i];
 
-   	return v;
+	for(int i=0;i<=b;i++)
+		v[(a+i+3)]=(*d)[i];
+
+
+	*d=v;
+
 }
 
 char *saida(char *entrada,int tamanho){
@@ -186,27 +198,23 @@ char *saida(char *entrada,int tamanho){
 	}
 	}
 
-	if(str_tamanho(unidade)==0 || str_tamanho(dezena)==0) saida=str_concatena(dezena,unidade);
-	else saida=str_concatenaE(dezena,unidade);
+	if(str_tamanho(unidade)==0 || str_tamanho(dezena)==0) str_concatena(&dezena,&unidade);
+	else str_concatenaE(&dezena,&unidade);
 
-	if(str_tamanho(centena)==0 || str_tamanho(saida)==0) saida=str_concatena(centena,saida);
-	else saida=str_concatenaE(centena,saida);
+	if(str_tamanho(centena)==0 || str_tamanho(saida)==0) str_concatena(&centena,&unidade);
+	else str_concatenaE(&centena,&unidade);
 
-	//free(unidade);
-	//free(centena);
-	//free(dezena);
+	str_copia(unidade,&saida);
 
 	char *cento="cento";
-	
 
 	for(int i=0;i<=5;i++){
 		if(saida[i]!=cento[i]){
-			//free(cento);
+			
 			return saida;
 		}
 	}
 
-	//free(cento);
 	saida="cem";
 	return saida;
 }
@@ -259,7 +267,7 @@ int main(int narg, char *argv[]){
 				printf("memoria insuficiente3");
 				return 1;
 			}
-			str_copia(extenso,vetornumext[i]);
+			str_copia(extenso,&vetornumext[i]);
 			//printf("%s.\n",vetornumext[i]);
 			i++;
 			j=0;
