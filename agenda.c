@@ -35,7 +35,7 @@ void inserir(struct registro **agenda){
 void apagar(struct registro **agenda, char *nome){
 	int i;
 	int achou=0;
-	char zero[5]="00";
+	char zero[1]="0";
 	for (i=0; i<1001 && achou==0 ; i++){
 		if (strcmp ((*agenda)[i].nome,nome)==0){
 			strcpy((*agenda)[i].nome,zero);
@@ -70,9 +70,7 @@ void lista(struct registro **agenda){
 		if ((*agenda)[i].ddd!=0){
 			printf("%s\n",(*agenda)[i].nome);
 		}
-		else{
-			terminou=1;
-		}
+		
 	}
 }
 
