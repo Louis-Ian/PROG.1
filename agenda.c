@@ -1,27 +1,32 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#define MAXNOME 101
+#define MAXREGISTRO 1001
 struct registro{
 	char nome[101];
 	char tipo[2];
-	int matricula;
-	int telefone;
+	long long int matricula;
+	long long int telefone;
 	int ddd;
 };
 typedef struct registro Registro;
-
-void str_copia(char *s,char **d){
-	(*d)=s;
-}
 
 void inserir(struct registro **agenda){
 	int i;
 	int terminou = 0;
 	for(i=0;i<1001 && !terminou;i++){
 		if ((*agenda)[i].ddd==0){
-			printf("entre com nome, matricula, telefone, ddd e tipo de telefone repectivamente:\n");
-			scanf("%s %d %d %d %s",(*agenda)[i].nome,&(*agenda)[i].matricula,&(*agenda)[i].telefone, &(*agenda)[i].ddd, (*agenda)[i].tipo);			
+			printf("entre com o nome:\n");
+			scanf("%s",(*agenda)[i].nome);
+			printf("entre com a matricula:\n");			
+			scanf("%lld", &(*agenda)[i].matricula);
+			printf("entre com o telefone:\n");
+			scanf("%lld",&(*agenda)[i].telefone);
+			printf("entre com o ddd:\n");
+			scanf("%d",&(*agenda)[i].ddd);
+			printf("entre com o tipo do telefone:\n");
+			scanf("%s",(*agenda)[i].tipo);
 			terminou=1;
 		}
 	}
@@ -51,7 +56,7 @@ void buscar(struct registro **agenda, char *nome){
 	int achou=0;
 	for (i=0; i<1001 && achou==0 ; i++){
 		if (strcmp ((*agenda)[i].nome,nome)==0){
-			printf("%s - (%d)%d\n",(*agenda)[i].nome, (*agenda)[i].ddd, (*agenda)[i].telefone);
+			printf("%s - (%d)%lld\n",(*agenda)[i].nome, (*agenda)[i].ddd, (*agenda)[i].telefone);
 			achou=1;
 			//return (void)1;
 		}
